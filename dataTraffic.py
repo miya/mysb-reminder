@@ -9,7 +9,7 @@ def login():
     auth_token = soup.find('input',type='hidden').get('value')
     payload = {
         'telnum': telnum,
-        'password': password,
+        'password': password
         'ticket':auth_token
     }
     s.post('https://id.my.softbank.jp/sbid_auth/type1/2.0/login.php', data=payload)
@@ -27,8 +27,10 @@ def get_data(s):
     req = s.post('https://re11.my.softbank.jp/resfe/top/', data=payload)
     data = bs(req.text,'html.parser')
     match = re.findall('<span>(.+)</span>GB',str(data))
-    return match[0],match[1]
-
+    total = '{:.2f}'.format(float(match[1]))
+    used =  '{:.2f}'.format(float(match[2))
+    ratio = used/total*100
+    return total,used,ratio
 
 def line(message):
     line_notify_token = access_token
@@ -42,7 +44,7 @@ if __name__ == '__main__':
     telnum = 'telephone_number'
     password = 'mysoftbank_password'
     access_token = 'line_notify_access'
-
+    
     data = get_data(login())
-    text =  '{}GB / {}GB ({}%)'.format(data[0],data[1],int(float(data[0])/float(data[1])*100))
+    text =  '{}GB / {}GB ({}%)'.format(data[0],data[1],data[2])
     line(text)
