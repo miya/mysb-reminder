@@ -32,6 +32,7 @@ def get_data(s):
     ratio = used/total*100
     return total,used,ratio
 
+
 def line(message):
     line_notify_token = access_token
     line_notify_api = 'https://notify-api.line.me/api/notify'
