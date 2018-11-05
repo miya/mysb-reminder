@@ -1,4 +1,4 @@
-import requests,os,re
+import requests,re
 from bs4 import BeautifulSoup as bs
 
 
@@ -27,10 +27,10 @@ def get_data(s):
     req = s.post('https://re11.my.softbank.jp/resfe/top/', data=payload)
     data = bs(req.text,'html.parser')
     match = re.findall('<span>(.+)</span>GB',str(data))
-    total = '{:.2f}'.format(float(match[1]))
-    used =  '{:.2f}'.format(float(match[2]))
-    ratio = float(used)/float(total)*100
-    return total,used,ratio
+    total =  match[1]
+    used = match[2]
+    ratio = round(float(used)/float(total)*100,1)
+    return used,total,ratio
 
 
 def line(message):
@@ -47,5 +47,5 @@ if __name__ == '__main__':
     access_token = 'line_notify_access_token'
 
     data = get_data(login())
-    text =  '{}GB / {}GB ({}%)'.format(data[1],data[0],data[2])
+    text =  '{}GB / {}GB ({}%)'.format(data[0],data[1],data[2])
     line(text)
