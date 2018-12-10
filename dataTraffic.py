@@ -1,5 +1,7 @@
 import re
+import sqlite3
 import requests
+import datetime
 from bs4 import BeautifulSoup
 
 def login():
@@ -25,11 +27,11 @@ def get_data(session):
     }
     res = session.post('https://re11.my.softbank.jp/resfe/top/', data=payload)
     m = re.findall('<span>(.+?)</span>GB', res.text)
-    used = float(m[0])
-    total = float(m[1])
     remain = float(m[2])
+    total = float(m[1])
+    used = float(m[0])
     rate = round(remain / total * 100, 1)
-    return used, total, remain, rate
+    return remain, total, used, rate
 
 def line(message):
     line_notify_token = access_token
@@ -38,11 +40,26 @@ def line(message):
     headers = {'Authorization': 'Bearer ' + line_notify_token}
     line_notify = requests.post(line_notify_api, data=payload, headers=headers)
 
+def add_database(remain=None, total=None, used=None, rate=None):
+    time = datetime.date.today()
+    tablename = time.strftime('data_%Y_%m')
+    timedata = time.strftime('%Y_%m_%d')
+    conn = sqlite3.connect('trafficData.db')
+    c = conn.cursor()
+    if time.day == 1:
+        order = 'create table {}(time, remain real, total real, used real , rate real);'.format(tablename)
+        c.execute(order)
+    order = 'insert into {} values("{}", {}, {}, {}, {});'.format(tablename, timedata, remain, total, used, rate)
+    c.execute(order)
+    conn.commit()
+    conn.close()
+
 if __name__ == '__main__':
     telnum = 'your_phone_number'
     password = 'your_mysoftbank_password'
     access_token = 'your_line_notify_token'
 
     data = get_data(session=login())
-    text =  '\n{}GB / {}GB ({}%)'.format(data[2], data[1], data[3])
+    text = '\n{}GB / {}GB ({}%)'.format(data[0], data[1], data[3])
     line(message=text)
+    add_database(remain=data[0], total=data[1], used=data[2], rate=data[3])
