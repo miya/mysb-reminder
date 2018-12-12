@@ -4,62 +4,59 @@ import requests
 import datetime
 from bs4 import BeautifulSoup
 
-def login():
-    session = requests.Session()
-    req = session.get('https://my.softbank.jp/msb/d/webLink/doSend/MSB020063')
-    soup = BeautifulSoup(req.text, 'html.parser')
-    ticket = soup.find('input', type='hidden').get('value')
-    payload = {
-        'telnum': telnum,
-        'password': password,
-        'ticket': ticket
-    }
-    session.post('https://id.my.softbank.jp/sbid_auth/type1/2.0/login.php', data=payload)
-    return session
+class dataTraffic:
+    def __init__(self, telnum, password, access_token):
+        self.telnum = telnum
+        self.password = password
+        self.access_token = access_token
 
-def get_data(session):
-    req = session.get('https://my.softbank.jp/msb/d/webLink/doSend/MRERE0000')
-    soup = BeautifulSoup(req.text, 'html.parser')
-    auth_token = soup.find_all('input')
-    payload = {
-        'mfiv': auth_token[0].get('value'),
-        'mfsb': auth_token[1].get('value'),
-    }
-    res = session.post('https://re11.my.softbank.jp/resfe/top/', data=payload)
-    m = re.findall('<span>(.+?)</span>GB', res.text)
-    remain = float(m[2])
-    total = float(m[1])
-    used = float(m[0])
-    rate = round(remain / total * 100, 1)
-    return remain, total, used, rate
+    def _login(self):
+        session = requests.Session()
+        req = session.get('https://my.softbank.jp/msb/d/webLink/doSend/MSB020063')
+        soup = BeautifulSoup(req.text, 'html.parser')
+        ticket = soup.find('input', type='hidden').get('value')
+        payload = {
+            'telnum': self.telnum,
+            'password': self.password,
+            'ticket': ticket
+        }
+        session.post('https://id.my.softbank.jp/sbid_auth/type1/2.0/login.php', data=payload)
+        return session
 
-def line(message):
-    line_notify_token = access_token
-    line_notify_api = 'https://notify-api.line.me/api/notify'
-    payload = {'message': message}
-    headers = {'Authorization': 'Bearer ' + line_notify_token}
-    line_notify = requests.post(line_notify_api, data=payload, headers=headers)
+    def get_data(self):
+        session = self._login()
+        req = session.get('https://my.softbank.jp/msb/d/webLink/doSend/MRERE0000')
+        soup = BeautifulSoup(req.text, 'html.parser')
+        auth_token = soup.find_all('input')
+        payload = {
+            'mfiv': auth_token[0].get('value'),
+            'mfsb': auth_token[1].get('value'),
+        }
+        res = session.post('https://re11.my.softbank.jp/resfe/top/', data=payload)
+        m = re.findall('<span>(.+?)</span>GB', res.text)
+        remain = float(m[2])
+        total = float(m[1])
+        used = float(m[0])
+        rate = round(remain / total * 100, 1)
+        return remain, total, used, rate
 
-def add_database(remain=None, total=None, used=None, rate=None):
-    time = datetime.date.today()
-    tablename = time.strftime('data_%Y_%m')
-    timedata = time.strftime('%Y_%m_%d')
-    conn = sqlite3.connect('trafficData.db')
-    c = conn.cursor()
-    if time.day == 1:
-        order = 'create table {}(time, remain real, total real, used real , rate real);'.format(tablename)
+    def line(self, message):
+        line_notify_token = self.access_token
+        line_notify_api = 'https://notify-api.line.me/api/notify'
+        payload = {'message': message}
+        headers = {'Authorization': 'Bearer ' + line_notify_token}
+        line_notify = requests.post(line_notify_api, data=payload, headers=headers)
+
+    def add_database(self, remain=None, total=None, used=None, rate=None):
+        time = datetime.date.today()
+        tablename = time.strftime('data_%Y_%m')
+        timedata = time.strftime('%Y_%m_%d')
+        conn = sqlite3.connect('trafficData.db')
+        c = conn.cursor()
+        if time.day == 1:
+            order = 'create table {}(time, remain real, total real, used real , rate real);'.format(tablename)
+            c.execute(order)
+        order = 'insert into {} values("{}", {}, {}, {}, {});'.format(tablename, timedata, remain, total, used, rate)
         c.execute(order)
-    order = 'insert into {} values("{}", {}, {}, {}, {});'.format(tablename, timedata, remain, total, used, rate)
-    c.execute(order)
-    conn.commit()
-    conn.close()
-
-if __name__ == '__main__':
-    telnum = 'your_phone_number'
-    password = 'your_mysoftbank_password'
-    access_token = 'your_line_notify_token'
-
-    data = get_data(session=login())
-    text = '\n{}GB / {}GB ({}%)'.format(data[0], data[1], data[3])
-    line(message=text)
-    add_database(remain=data[0], total=data[1], used=data[2], rate=data[3])
+        conn.commit()
+        conn.close()
