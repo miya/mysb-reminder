@@ -1,5 +1,5 @@
 # dataTraffic
-データ残量をLINEに通知するスクリプト
+データ残量をLINEに通知するスクリプト(ソフトバンクユーザー限定)
 ## Setup
 ```git clone https://github.com/0x0u/dataTraffic```  
 
