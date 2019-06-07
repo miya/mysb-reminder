@@ -5,6 +5,7 @@ import datetime
 from bs4 import BeautifulSoup
 
 class dataTraffic:
+
     def __init__(self, telnum, password, access_token):
         self.telnum = telnum
         self.password = password
@@ -52,6 +53,7 @@ class dataTraffic:
         text = '\n{}GB / {}GB ({}%)'.format(data[0], data[1], data[3])
         self.line(message=text)
 
+    #修正中
     def add_database(self, remain=None, total=None, used=None, rate=None):
         time = datetime.date.today()
         tablename = time.strftime('data_%Y_%m')
