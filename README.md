@@ -1,15 +1,17 @@
 # dataTraffic
 データ残量をLINEに通知するスクリプト(ソフトバンクユーザー限定)
 ## Setup
-```git clone https://github.com/0x0u/dataTraffic```  
+```
+git clone https://github.com/0x0u/dataTraffic
 
-```cd dataTraffic```  
+cd dataTraffic
 
-```pip3 install -r requiremenets.txt```  
+pip3 install -r requiremenets.txt
 
 sample.pyを開きtelnum（電話番号）、password、access_token（line notifyのアクセストークン）を自分のものに書き換える
 
-```python3 sample.py```  
+python3 sample.py
+```
 ## qiita
 qiita: https://qiita.com/0x0/items/b7c951988b5ea6c866d3
 

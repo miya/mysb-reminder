@@ -10,7 +10,7 @@ class dataTraffic:
         self.password = password
         self.access_token = access_token
 
-    def _login(self):
+    def login(self):
         session = requests.Session()
         req = session.get('https://my.softbank.jp/msb/d/webLink/doSend/MSB020063')
         soup = BeautifulSoup(req.text, 'html.parser')
@@ -24,7 +24,7 @@ class dataTraffic:
         return session
 
     def get_data(self):
-        session = self._login()
+        session = self.login()
         req = session.get('https://my.softbank.jp/msb/d/webLink/doSend/MRERE0000')
         soup = BeautifulSoup(req.text, 'html.parser')
         auth_token = soup.find_all('input')
@@ -46,6 +46,11 @@ class dataTraffic:
         payload = {'message': message}
         headers = {'Authorization': 'Bearer ' + line_notify_token}
         line_notify = requests.post(line_notify_api, data=payload, headers=headers)
+    
+    def send_data(self):
+        data = self.get_data()
+        text = '\n{}GB / {}GB ({}%)'.format(data[0], data[1], data[3])
+        self.line(message=text)
 
     def add_database(self, remain=None, total=None, used=None, rate=None):
         time = datetime.date.today()
