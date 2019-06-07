@@ -6,10 +6,10 @@ from bs4 import BeautifulSoup
 
 class dataTraffic:
 
-    def __init__(self, telnum, password, access_token):
+    def __init__(self, telnum, password, line_access_token):
         self.telnum = telnum
         self.password = password
-        self.access_token = access_token
+        self.line_access_token = line_access_token
 
     def login(self):
         session = requests.Session()
@@ -42,7 +42,7 @@ class dataTraffic:
         return remain, total, used, rate
 
     def line(self, message):
-        line_notify_token = self.access_token
+        line_notify_token = self.line_access_token
         line_notify_api = 'https://notify-api.line.me/api/notify'
         payload = {'message': message}
         headers = {'Authorization': 'Bearer ' + line_notify_token}
