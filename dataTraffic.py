@@ -14,7 +14,7 @@ class dataTraffic:
     def login(self):
         session = requests.Session()
         req = session.get('https://my.softbank.jp/msb/d/webLink/doSend/MSB020063')
-        soup = BeautifulSoup(req.text, 'html.parser')
+        soup = BeautifulSoup(req.text, 'lxml')
         ticket = soup.find('input', type='hidden').get('value')
         payload = {
             'telnum': self.telnum,
@@ -27,7 +27,7 @@ class dataTraffic:
     def get_data(self):
         session = self.login()
         req = session.get('https://my.softbank.jp/msb/d/webLink/doSend/MRERE0000')
-        soup = BeautifulSoup(req.text, 'html.parser')
+        soup = BeautifulSoup(req.text, 'lxml')
         auth_token = soup.find_all('input')
         payload = {
             'mfiv': auth_token[0].get('value'),
