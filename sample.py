@@ -1,4 +1,4 @@
-from dataTraffic import dataTraffic
+from MySBdT import dataTraffic
 
 telnum = 'your_phone_number'
 password = 'your_mysoftbank_password'
