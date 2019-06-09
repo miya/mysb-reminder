@@ -1,4 +1,4 @@
-# dataTraffic
+# MySB_dataTraffic
 データ残量をLINEに通知するスクリプト(ソフトバンクユーザー限定)
 ## Setup
 ```
