@@ -24,7 +24,7 @@ class dataTraffic:
         session.post('https://id.my.softbank.jp/sbid_auth/type1/2.0/login.php', data=payload)
         return session
 
-    def get_data(self):
+    def get(self):
         session = self.login()
         req = session.get('https://my.softbank.jp/msb/d/webLink/doSend/MRERE0000')
         soup = BeautifulSoup(req.text, 'lxml')
@@ -41,17 +41,14 @@ class dataTraffic:
         rate = round(remain / total * 100, 1)
         return remain, total, used, rate
 
-    def line(self, message):
-        line_notify_token = self.line_access_token
-        line_notify_api = 'https://notify-api.line.me/api/notify'
-        payload = {'message': message}
-        headers = {'Authorization': 'Bearer ' + line_notify_token}
-        line_notify = requests.post(line_notify_api, data=payload, headers=headers)
-    
-    def send_data(self):
+    def line(self):
         data = self.get_data()
         text = '\n{}GB / {}GB ({}%)'.format(data[0], data[1], data[3])
-        self.line(message=text)
+        line_notify_token = self.line_access_token
+        line_notify_api = 'https://notify-api.line.me/api/notify'
+        payload = {'message': text}
+        headers = {'Authorization': 'Bearer ' + line_notify_token}
+        line_notify = requests.post(line_notify_api, data=payload, headers=headers)
 
     #修正中
     def add_database(self, remain=None, total=None, used=None, rate=None):
