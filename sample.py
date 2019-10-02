@@ -11,5 +11,3 @@ dt.get()
 
 # LINEに通知する
 dt.line() 
-
-	Version 2.0.1 Release🎍
