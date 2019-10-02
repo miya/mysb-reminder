@@ -42,7 +42,6 @@ class dataTraffic:
         rate = round(remain / total * 100, 1)
         return total, remain, used, rate
 
-
     def line(self):
         data = self.get()
         text = '{}GB / {}GB ({}%)'.format(data[1], data[0], data[3])
