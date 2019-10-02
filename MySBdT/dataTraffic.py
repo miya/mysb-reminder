@@ -33,17 +33,19 @@ class dataTraffic:
             'mfiv': auth_token[0].get('value'),
             'mfsb': auth_token[1].get('value'),
         }
-        res = session.post('https://re11.my.softbank.jp/resfe/top/', data=payload)
-        m = re.findall('<span>(.+?)</span>GB', res.text)
-        remain = float(m[2])
-        total = float(m[1])
-        used = float(m[0])
+        req2 = session.post('https://re11.my.softbank.jp/resfe/top/', data=payload)
+        soup2 = BeautifulSoup(req2.text, 'lxml')
+        num = [float(re.findall('\d+[.]+\d\d', str(i))[0]) for i in soup2.find_all(class_='p-left-10')]
+        total = num[1]
+        remain = num[1] - num[0]
+        used = num[0]
         rate = round(remain / total * 100, 1)
-        return remain, total, used, rate
+        return total, remain, used, rate
+
 
     def line(self):
-        data = self.get_data()
-        text = '\n{}GB / {}GB ({}%)'.format(data[0], data[1], data[3])
+        data = self.get()
+        text = '{}GB / {}GB ({}%)'.format(data[1], data[0], data[2])
         line_notify_token = self.line_access_token
         line_notify_api = 'https://notify-api.line.me/api/notify'
         payload = {'message': text}
