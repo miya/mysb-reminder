@@ -51,18 +51,3 @@ class dataTraffic:
         payload = {'message': text}
         headers = {'Authorization': 'Bearer ' + line_notify_token}
         line_notify = requests.post(line_notify_api, data=payload, headers=headers)
-
-    #修正中
-    def add_database(self, remain=None, total=None, used=None, rate=None):
-        time = datetime.date.today()
-        tablename = time.strftime('data_%Y_%m')
-        timedata = time.strftime('%Y_%m_%d')
-        conn = sqlite3.connect('trafficData.db')
-        c = conn.cursor()
-        if time.day == 1:
-            order = 'create table {}(time, remain real, total real, used real , rate real);'.format(tablename)
-            c.execute(order)
-        order = 'insert into {} values("{}", {}, {}, {}, {});'.format(tablename, timedata, remain, total, used, rate)
-        c.execute(order)
-        conn.commit()
-        conn.close()
