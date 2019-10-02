@@ -45,7 +45,8 @@ class dataTraffic:
 
     def line(self):
         data = self.get()
-        text = '{}GB / {}GB ({}%)'.format(data[1], data[0], data[2])
+        text = '{}GB / {}GB ({}%)'.format(data[1], data[0], data[3])
+        print(text)
         line_notify_token = self.line_access_token
         line_notify_api = 'https://notify-api.line.me/api/notify'
         payload = {'message': text}
