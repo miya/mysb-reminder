@@ -9,5 +9,5 @@ dt = dataTraffic(telnum=telnum, password=password, line_access_token=line_access
 # データ（総量、残量、使用料、割合）の取得
 dt.get()
 
-# LINEに通知する（例: 4.85GB/5.00GB ()）
+# LINEに通知する（line）
 dt.line() 
