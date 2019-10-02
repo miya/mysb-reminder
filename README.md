@@ -11,7 +11,7 @@ LINE通知には[LINE Notify](https://notify-bot.line.me/ja/)を使用するの�
 ```Python
 from MySBdT import dataTraffic
 ```
-telnum、password、line_access_tokenを自分のものに置き換える  。
+telnum、password、line_access_tokenを自分のものに置き換える。
 ```Python
 telnum = 'your_phone_number'
 password = 'your_mysoftbank_password'
@@ -21,13 +21,13 @@ line_access_token = 'your_line_access_token'
 ```Python
 dt = dataTraffic(telnum=telnum, password=password, access_token=access_token)
 ```
-データ（データ残量、総量、使用量、割合）の取得
+データ（総量、残量、使用料、割合）の取得
 ```Python
-data = dt.get_data()
+data = dt.get()
 ```
 LINEに通知する
 ```Python
-dt.send_data()
+dt.line()
 ```
 こんな感じ。 一日一回スケジューラーで実行したらデータマネジメントしやすそう。
 
