@@ -10,4 +10,4 @@ dt = dataTraffic(telnum=telnum, password=password, line_access_token=line_access
 dt.get()
 
 # LINEに通知する
-dt.line() 
+dt.line()
