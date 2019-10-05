@@ -19,7 +19,7 @@ line_access_token = 'your_line_access_token'
 ```
 インスタンスを作成  
 ```Python
-dt = dataTraffic(telnum=telnum, password=password, access_token=access_token)
+dt = dataTraffic(telnum=telnum, password=password, line_access_token)
 ```
 データ（総量、残量、使用料、割合）の取得
 ```Python
