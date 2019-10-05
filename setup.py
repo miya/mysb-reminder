@@ -5,7 +5,7 @@ install_reqs = [line.strip() for line in open('requirements.txt').readlines()]
 
 setup(
     name='MySB_datatraffic',
-    version='2.0.2',
+    version='2.0.3',
     description='MySoftBank dataTraffic',
     url='https://github.com/0x0u/MySB_dataTraffic',
     author='m0zu',
