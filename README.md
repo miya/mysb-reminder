@@ -21,9 +21,13 @@ line_access_token = 'your_line_access_token'
 ```Python
 dt = dataTraffic(telnum=telnum, password=password, line_access_token=line_access_token)
 ```
-データ（総量、残量、使用料、割合）の取得
+データ（総量、残量、使用量、割合、前月繰越分）の取得
 ```Python
 data = dt.get()
+print(data)
+
+# 実行結果
+# ('5.00', '4.04', '0.96', '80.8', '0.00')
 ```
 LINEに通知する
 ```Python
@@ -31,4 +35,4 @@ dt.line()
 ```
 こんな感じ。 一日一回スケジューラーで実行したらデータマネジメントしやすそう。
 
-![](https://user-images.githubusercontent.com/34241526/59161618-1fc92100-8b20-11e9-9394-b6cfb86a6914.png)
+![](https://user-images.githubusercontent.com/34241526/66271995-2170de80-e89f-11e9-9a66-a32cfef9747f.jpg)
