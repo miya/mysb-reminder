@@ -35,11 +35,12 @@ class dataTraffic:
         r2 = s.post('https://re11.my.softbank.jp/resfe/top/', data=payload)
         soup2 = BeautifulSoup(r2.text, 'lxml')
         num = [float(re.findall('\d+[.]+\d\d', str(i))[0]) for i in soup2.find_all(class_='p-left-10')]
-        total = num[1]
-        remain = num[1] - num[0]
-        used = num[0]
+        total = round(num[1], 2)
+        remain = round(num[1] - num[0], 2)
+        used = round(num[0], 2)
         rate = round(remain / total * 100, 1)
-        return total, remain, used, rate
+        bf = round(num[2], 2)
+        return str(total).ljust(4, str(0)), str(remain).ljust(4, str(0)), str(used).ljust(4, str(0)), str(rate).ljust(4, str(0)), str(bf).ljust(4, str(0))
 
     def line(self):
         data = self.get()
