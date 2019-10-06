@@ -33,6 +33,6 @@ LINEに通知する
 ```Python
 dt.line()
 ```
-こんな感じ。 一日一回スケジューラーで実行したらデータマネジメントしやすそう。
+実行すると以下のような情報がLINEに通知される。戻り値はrequestsのHTTPステータスコードが返る。
 
 ![](https://user-images.githubusercontent.com/34241526/66271995-2170de80-e89f-11e9-9a66-a32cfef9747f.jpg)
