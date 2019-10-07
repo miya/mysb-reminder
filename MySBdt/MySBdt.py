@@ -11,7 +11,7 @@ class API:
 
     def _login(self):
         s = requests.Session()
-        r = s.get('https://my.softbank.jp/msb/d/webLink/doSend/MSB020063')
+        r = s.get('https://my.softbank.jp/msb/d/webLink/doSend/MRERE0000')
         soup = BeautifulSoup(r.text, 'lxml')
         ticket = soup.find('input', type='hidden').get('value')
         payload = {
@@ -42,11 +42,12 @@ class API:
             used = round(num[0], 2)
             rate = round(remain / total * 100, 1)
             bf = round(num[2], 2)
-        return str(total).ljust(4, str(0)), str(remain).ljust(4, str(0)), str(used).ljust(4, str(0)), str(rate).ljust(4, str(0)), str(bf).ljust(4, str(0))
+        dt = {'total':str(total).ljust(4, str(0)), 'remain':str(remain).ljust(4, str(0)), 'used':str(used).ljust(4, str(0)), 'rate':str(rate).ljust(4, str(0)), 'bf':str(bf).ljust(4, str(0))}  
+        return dt
 
     def line(self):
-        data = self.get()
-        text = '\n{}GB / {}GB ({}%)'.format(data[1], data[0], data[3])
+        dt = self.get()
+        text = '\n{}GB / {}GB ({}%)'.format(dt['remain'], dt['total'], dt['rate'])
         line_notify_token = self.line_access_token
         line_notify_api = 'https://notify-api.line.me/api/notify'
         payload = {'message': text}
