@@ -10,7 +10,7 @@ class API:
         self.password = password
         self.line_access_token = line_access_token
 
-    def login(self):
+    def _login(self):
         s = requests.Session()
         r = s.get('https://my.softbank.jp/msb/d/webLink/doSend/MSB020063')
         soup = BeautifulSoup(r.text, 'lxml')
