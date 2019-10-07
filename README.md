@@ -36,3 +36,6 @@ api.line()
 実行すると以下のような情報がLINEに通知される。戻り値はrequestsのHTTPステータスコードが返る。ログインに失敗した時やMySoftbankがメンテナンス中の時、htmlが変更された時にはデータ量に0.00が代入される。
 
 ![](https://user-images.githubusercontent.com/34241526/66271995-2170de80-e89f-11e9-9a66-a32cfef9747f.jpg)
+
+## Author
+@qxi_(https://twitter.com/qxi_)
