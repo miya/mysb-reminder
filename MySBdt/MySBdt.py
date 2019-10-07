@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 
 class API:
 
-    def __init__(self, telnum, password, line_access_token):
+    def __init__(self, telnum=None, password=None, line_access_token=None):
         self.telnum = telnum
         self.password = password
         self.line_access_token = line_access_token
