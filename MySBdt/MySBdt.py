@@ -24,8 +24,8 @@ class API:
         return s
 
     def get(self):
-        s = self.login()
-        r= s.get('https://my.softbank.jp/msb/d/webLink/doSend/MRERE0000')
+        s = self._login()
+        r = s.get('https://my.softbank.jp/msb/d/webLink/doSend/MRERE0000')
         soup = BeautifulSoup(r.text, 'lxml')
         auth_token = soup.find_all('input')
         payload = {
@@ -35,11 +35,14 @@ class API:
         r2 = s.post('https://re11.my.softbank.jp/resfe/top/', data=payload)
         soup2 = BeautifulSoup(r2.text, 'lxml')
         num = [float(re.findall('\d+[.]+\d\d', str(i))[0]) for i in soup2.find_all(class_='p-left-10')]
-        total = round(num[1], 2)
-        remain = round(num[1] - num[0], 2)
-        used = round(num[0], 2)
-        rate = round(remain / total * 100, 1)
-        bf = round(num[2], 2)
+        if num == []:
+            total, remain, used, rate, bf = 0.00, 0.00, 0.00, 0.00, 0.00
+        else:
+            total = round(num[1], 2)
+            remain = round(num[1] - num[0], 2)
+            used = round(num[0], 2)
+            rate = round(remain / total * 100, 1)
+            bf = round(num[2], 2)
         return str(total).ljust(4, str(0)), str(remain).ljust(4, str(0)), str(used).ljust(4, str(0)), str(rate).ljust(4, str(0)), str(bf).ljust(4, str(0))
 
     def line(self):
