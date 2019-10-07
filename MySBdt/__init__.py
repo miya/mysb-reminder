@@ -1,1 +1,1 @@
-from MySBdT.dataTraffic import dataTraffic
+from .MySBdt import API
