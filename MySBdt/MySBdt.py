@@ -3,7 +3,7 @@ import requests
 import datetime
 from bs4 import BeautifulSoup
 
-class dataTraffic:
+class API:
 
     def __init__(self, telnum, password, line_access_token):
         self.telnum = telnum
