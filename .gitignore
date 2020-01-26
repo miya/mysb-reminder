@@ -1,6 +1,8 @@
 __pycache__/
+.idea/
+build/
+dist/
+
 .DS_Store
-build
-dist
 MySB_datatraffic.egg-info
 test.py
