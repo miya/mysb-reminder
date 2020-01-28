@@ -6,10 +6,11 @@ from bs4 import BeautifulSoup
 
 class API:
 
-    def __init__(self, telnum=None, password=None, line_access_token=None):
+    def __init__(self, telnum=None, password=None, line_access_token=None, current_month_data=None):
         self.telnum = telnum
         self.password = password
         self.line_access_token = line_access_token
+        self.current_month_data = current_month_data
 
     def _login(self):
         # ログイン
@@ -78,7 +79,7 @@ class API:
         remain = data["remain_data"]
 
         # 今月のデータ量 + 先月の繰越データ量 + 今月の追加分のデータ量 + 先月の追加繰越データ量
-        total = 5.0 + data["step_remain_data"] + data["additional_data"] + data["given_data"]
+        total = self.current_month_data + data["step_remain_data"] + data["additional_data"] + data["given_data"]
 
         # 使用量に対する残りのデータ量の割合
         rate = round(remain / total * 100, 2)
