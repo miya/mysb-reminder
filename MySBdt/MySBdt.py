@@ -11,6 +11,7 @@ class API:
         self.line_access_token = line_access_token
 
     def _login(self):
+        # ログイン
         s = requests.Session()
         r = s.get('https://my.softbank.jp/msb/d/webLink/doSend/MRERE0000')
         soup = BeautifulSoup(r.text, 'lxml')
@@ -21,20 +22,21 @@ class API:
             'ticket': ticket
         }
         s.post('https://id.my.softbank.jp/sbid_auth/type1/2.0/login.php', data=payload)
-        return s
 
-    def get_data(self):
-        login = self._login()
-        r = login.get('https://my.softbank.jp/msb/d/webLink/doSend/MRERE0000')
-        soup = BeautifulSoup(r.text, 'lxml')
-        auth_token = soup.find_all('input')
-        payload = {
+        # [トップ] => [データ使用の管理] に遷移
+        r2 = s.get('https://my.softbank.jp/msb/d/webLink/doSend/MRERE0000')
+        soup2 = BeautifulSoup(r2.text, 'lxml')
+        auth_token = soup2.find_all('input')
+        payload2 = {
             'mfiv': auth_token[0].get('value'),
             'mfsb': auth_token[1].get('value'),
         }
-        r2 = login.post('https://re11.my.softbank.jp/resfe/top/', data=payload)
+        r3 = s.post('https://re11.my.softbank.jp/resfe/top/', data=payload2)
+        return r3
 
-        find_data = re.findall('chartType":  "pie",(.+),}]};', r2.text)[0]
+    def get_data(self):
+        login = self._login()
+        find_data = re.findall('chartType":  "pie",(.+),}]};', login.text)[0]
         num_data_tmp = "{" + find_data + "}"
         data = ast.literal_eval(num_data_tmp)
 
@@ -68,7 +70,6 @@ class API:
             "given_data": float(given_data),
             "given_used_data": float(given_used_data),
         }
-
         return dic
 
     def send_message(self):
