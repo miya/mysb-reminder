@@ -3,6 +3,7 @@ import ast
 import requests
 from bs4 import BeautifulSoup
 
+
 class API:
 
     def __init__(self, telnum=None, password=None, line_access_token=None):
@@ -59,9 +60,9 @@ class API:
         given_data = "0" if data["currentGivenData"] == "" else data["currentGivenData"]
 
         # 追加繰越使用量
-        given_used_data = "0" if data["currentGivenUsedData"] == "" else data["currentGivenUsedData"]
+        given_used_data = "0" if data["currentGivenUsedData"] == "" else data["currentGivenUsedData"]\
 
-        dic = {
+        data_dic = {
             "used_data": float(used_data),
             "remain_data": float(remain_data),
             "step_remain_data": float(step_remain_data),
@@ -70,13 +71,18 @@ class API:
             "given_data": float(given_data),
             "given_used_data": float(given_used_data),
         }
-        return dic
+        return data_dic
 
     def send_message(self):
         data = self.get_data()
         remain = data["remain_data"]
+
+        # 今月のデータ量 + 先月の繰越データ量 + 今月の追加分のデータ量 + 先月の追加繰越データ量
         total = 5.0 + data["step_remain_data"] + data["additional_data"] + data["given_data"]
+
+        # 使用量に対する残りのデータ量の割合
         rate = round(remain / total * 100, 2)
+
         text = '\n{}GB / {}GB ({}%)'.format(remain, total, rate)
         line_notify_token = self.line_access_token
         line_notify_api = 'https://notify-api.line.me/api/notify'
