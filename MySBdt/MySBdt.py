@@ -23,16 +23,17 @@ class API:
         s.post('https://id.my.softbank.jp/sbid_auth/type1/2.0/login.php', data=payload)
         return s
 
-    def get(self):
-        s = self._login()
-        r = s.get('https://my.softbank.jp/msb/d/webLink/doSend/MRERE0000')
+    def get_data(self):
+        login = self._login()
+        r = login.get('https://my.softbank.jp/msb/d/webLink/doSend/MRERE0000')
         soup = BeautifulSoup(r.text, 'lxml')
         auth_token = soup.find_all('input')
         payload = {
             'mfiv': auth_token[0].get('value'),
             'mfsb': auth_token[1].get('value'),
         }
-        r2 = s.post('https://re11.my.softbank.jp/resfe/top/', data=payload)
+        r2 = login.post('https://re11.my.softbank.jp/resfe/top/', data=payload)
+
         find_data = re.findall('chartType":  "pie",(.+),}]};', r2.text)[0]
         num_data_tmp = "{" + find_data + "}"
         data = ast.literal_eval(num_data_tmp)
@@ -70,8 +71,8 @@ class API:
 
         return dic
 
-    def line(self):
-        data = self.get()
+    def send_message(self):
+        data = self.get_data()
         remain = data["remain_data"]
         total = 5.0 + data["step_remain_data"] + data["additional_data"] + data["given_data"]
         rate = round(remain / total * 100, 2)
