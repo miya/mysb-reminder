@@ -1,9 +1,9 @@
 import MySBdt
 
-telnum = 'your_phone_number'
-password = 'your_mysoftbank_password'
-line_access_token = 'your_line_notify_token'
-current_month_data = 5.0
+telnum = "電話番号"
+password = "MySoftbankのパスワード"
+line_access_token = "LineNotifyのアクセストークン"
+current_month_data = "契約しているプランのデータ量の少数第一まで 例: 5.0"
 
 # インスタンスの作成
 api = MySBdt.API(telnum=telnum, password=password, line_access_token=line_access_token, current_month_data=current_month_data)
