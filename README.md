@@ -1,6 +1,12 @@
 # MySB_dataTraffic
 [MySoftBank](https://www.softbank.jp/mysoftbank/)をスクレイピングしてデータ残量をLINEに通知するやつ
 ## Install
+GitHubから直接Cloneすることを推奨します。この方法の場合はMySB_dataTrafficディレクトリ内のsample.pyを書き換えることで使用することができます。
+```
+$ git clone https://github.com/0x0u/MySB_dataTraffic
+$ cd MySB_dataTraffic
+```
+pipでのインストールも可能です。
 ```
 $ pip3 install MySB-datatraffic
 ```
@@ -9,7 +15,7 @@ $ pip3 install MySB-datatraffic
 ```Python
 import MySBdt
 ```
-LINE通知には[LINE Notify](https://notify-bot.line.me/ja/)を使用するのでアクセストークンを取得しておく。telnum、password、line_access_token、current_month_dataを自分のものに置き換える。
+LINE通知には[LINE Notify](https://notify-bot.line.me/ja/)を使用するのでアクセストークンを取得しておく必要があります。telnum、password、line_access_token、current_month_dataを自分のものに置き変えます。
 ```Python
 telnum = "電話番号"
 password = "MySoftbankのパスワード"
@@ -20,7 +26,7 @@ current_month_data = "今月のデータ量"
 ```Python
 api = MySBdt.API(telnum=telnum, password=password, line_access_token=line_access_token, current_month_data=current_month_data)
 ```
-データ（使用量、残量、繰越残量、追加量、追加使用量、追加繰越量、追加繰越使用量）の取得
+データ（使用量、残量、繰越残量、追加量、追加使用量、追加繰越量、追加繰越使用量）の取得ができます。
 ```Python
 data = api.get_data()
 print(data)
@@ -28,11 +34,15 @@ print(data)
 # 実行結果
 # {'used_data': 6.34, 'remain_data': 0.02, 'step_remain_data': 0.0, 'additional_data': 1.0, 'additional_used_data': 0.98, 'given_data': 0.36, 'given_used_data': 0.36}
 ```
-LINEに通知する
+LINEに通知します。
 ```Python
-api.send_message()
+status = api.send_message()
+print(status)
+
+# 実行結果
+# 200
 ```
-実行すると以下のような情報がLINEに通知される。戻り値はrequestsのHTTPステータスコードが返る。
+実行すると以下のような情報がLINEに通知されます。戻り値はrequestsのHTTPステータスコードが返ります。
 
 ![](https://user-images.githubusercontent.com/34241526/66271995-2170de80-e89f-11e9-9a66-a32cfef9747f.jpg)
 
