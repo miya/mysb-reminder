@@ -20,7 +20,7 @@ LINE通知には[LINE Notify](https://notify-bot.line.me/ja/)を使用するの�
 telnum = "電話番号"
 password = "MySoftbankのパスワード"
 line_access_token = "LineNotifyのアクセストークン"
-current_month_data = "契約しているプランのデータ量"
+current_month_data = "契約しているプランのデータ量の少数第一まで 例: 5.0"
 ```
 インスタンスを作成  
 ```Python
