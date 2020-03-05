@@ -6,16 +6,15 @@ from bs4 import BeautifulSoup
 
 class API:
 
-    def __init__(self, telnum=None, password=None, line_access_token=None, current_month_data=None):
+    def __init__(self, telnum=None, password=None, line_access_token=None):
         self.telnum = telnum
         self.password = password
         self.line_access_token = line_access_token
-        self.current_month_data = current_month_data
 
     def _login(self):
         # ログイン
         s = requests.Session()
-        r = s.get('https://my.softbank.jp/msb/d/webLink/doSend/MRERE0000')
+        r = s.get('https://my.softbank.jp/msb/d/webLink/doSend/MRERE0000')		
         soup = BeautifulSoup(r.text, 'lxml')
         ticket = soup.find('input', type='hidden').get('value')
         payload = {
@@ -42,25 +41,13 @@ class API:
         num_data_tmp = "{" + find_data + "}"
         data = ast.literal_eval(num_data_tmp)
 
-        # 使用量
+        # 使用量、残量、追加データ、追加データ使用量、追加繰越データ量、追加繰越使用量の取得
         used_data = "0" if data["usedGigaData"] == "" else data["usedGigaData"]
-
-        # 残量
         remain_data = "0" if data["remainData"] == "" else data["remainData"]
-
-        # 繰越データ残量
         step_remain_data = "0" if data["stepRemainData"] == "" else data["stepRemainData"]
-
-        # 追加データ量
         additional_data = "0" if data["currentAdditionalData"] == "" else data["currentAdditionalData"]
-
-        # 追加データ使用量
         additional_used_data = "0" if data["currentAdditionalUsedData"] == "" else data["currentAdditionalUsedData"]
-
-        # 追加繰越データ量
         given_data = "0" if data["currentGivenData"] == "" else data["currentGivenData"]
-
-        # 追加繰越使用量
         given_used_data = "0" if data["currentGivenUsedData"] == "" else data["currentGivenUsedData"]\
 
         data_dic = {
@@ -77,13 +64,9 @@ class API:
     def send_message(self):
         data = self.get_data()
         remain = data["remain_data"]
-
-        # 今月のデータ量 + 先月の繰越データ量 + 今月の追加分のデータ量 + 先月の追加繰越データ量
-        total = self.current_month_data + data["step_remain_data"] + data["additional_data"] + data["given_data"]
-
+        total = remain + data["used_data"]
         # 使用量に対する残りのデータ量の割合
-        rate = round(remain / total * 100, 2)
-
+        rate = round(remain/ total * 100, 2)
         text = '\n{}GB / {}GB ({}%)'.format(remain, total, rate)
         line_notify_token = self.line_access_token
         line_notify_api = 'https://notify-api.line.me/api/notify'
@@ -91,3 +74,4 @@ class API:
         headers = {'Authorization': 'Bearer ' + line_notify_token}
         line_notify = requests.post(line_notify_api, data=payload, headers=headers)
         return line_notify.status_code
+
