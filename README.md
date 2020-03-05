@@ -15,16 +15,15 @@ $ pip3 install MySB-datatraffic
 ```Python
 import MySBdt
 ```
-LINE通知には[LINE Notify](https://notify-bot.line.me/ja/)を使用するのでアクセストークンを取得しておく必要があります。telnum、password、line_access_token、current_month_dataを自分のものに置き変えます。
+LINE通知には[LINE Notify](https://notify-bot.line.me/ja/)を使用するのでアクセストークンを取得しておく必要があります。telnum、password、line_access_tokenを自分のものに置き変えます。
 ```Python
 telnum = "電話番号"
 password = "MySoftbankのパスワード"
 line_access_token = "LineNotifyのアクセストークン"
-current_month_data = "契約しているプランのデータ量の少数第一まで 例: 5.0"
 ```
 インスタンスを作成  
 ```Python
-api = MySBdt.API(telnum=telnum, password=password, line_access_token=line_access_token, current_month_data=current_month_data)
+api = MySBdt.API(telnum=telnum, password=password, line_access_token=line_access_token)
 ```
 データ（使用量、残量、繰越残量、追加量、追加使用量、追加繰越量、追加繰越使用量）の取得ができます。
 ```Python
