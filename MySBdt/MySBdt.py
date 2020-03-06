@@ -63,8 +63,8 @@ class API:
 
     def send_message(self):
         data = self.get_data()
-        remain = data["remain_data"]
-        total = remain + data["used_data"]
+        remain = round(data["remain_data"], 2)
+        total = round(remain + data["used_data"], 2)
         # 使用量に対する残りのデータ量の割合
         rate = round(remain/ total * 100, 2)
         text = '\n{}GB / {}GB ({}%)'.format(remain, total, rate)
