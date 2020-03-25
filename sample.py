@@ -1,9 +1,8 @@
-import os
 import MySBdt
 
-telnum = os.environ.get("telnum")
-password = os.environ.get("password")
-line_access_token = os.environ.get("line_access_token")
+telnum = "電話番号"
+password = "MySoftbankのパスワード"
+line_access_token = "LineNotifyのアクセストークン"
 
 # インスタンスの作成
 api = MySBdt.API(telnum=telnum, password=password, line_access_token=line_access_token)
