@@ -1,8 +1,6 @@
 name: workflow
 
-on:
-  schedule:
-    - cron:  "14 50 * * *"
+on: push
 
 jobs:
   build:
