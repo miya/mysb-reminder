@@ -1,11 +1,6 @@
 # MySB_dataTraffic
 [MySoftBank](https://www.softbank.jp/mysoftbank/)をスクレイピングしてデータ残量をLINEに通知するやつ
 ## Install
-GitHubから直接Cloneすることを推奨します。この方法の場合はMySB_dataTrafficディレクトリ内のsample.pyを書き換えることで使用することができます。
-```
-$ git clone https://github.com/0x0u/MySB_dataTraffic
-$ cd MySB_dataTraffic
-```
 pipでのインストールも可能です。
 ```
 $ pip3 install MySB-datatraffic
