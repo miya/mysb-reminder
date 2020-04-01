@@ -1,7 +1,7 @@
 # MySB_dataTraffic
 [MySoftBank](https://www.softbank.jp/mysoftbank/)をスクレイピングしてデータ残量をLINEに通知するやつ
 ## Install
-pipでのインストールも可能です。
+pipでインストールします
 ```
 $ pip3 install MySB-datatraffic
 ```
