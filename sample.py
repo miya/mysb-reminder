@@ -1,5 +1,8 @@
 import MySBdt
 
+# LINEに通知する場合は以下のURLからLINE Notifyのアクセストークンを取得する必要があります。
+# https://notify-bot.line.me/ja/
+
 telnum = "電話番号"
 password = "MySoftbankのパスワード"
 line_access_token = "LineNotifyのアクセストークン"
