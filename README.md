@@ -3,7 +3,7 @@
 
 ## Install 
 ```python
-$ pip3 install MySB-datatraffic
+$ pip3 install MySB_datatraffic
 ```
 
 ## Initialize
