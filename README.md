@@ -2,7 +2,7 @@
 [MySoftbank](https://www.softbank.jp/mysoftbank/)をスクレイピングして通信データ残量をLINE通知するやつ
 
 ## Install 
-```python
+```
 $ pip3 install MySB_datatraffic
 ```
 
