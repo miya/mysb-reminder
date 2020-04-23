@@ -1,1 +1,1 @@
-from .MySBdt import API
+from .mysoftbank import *
