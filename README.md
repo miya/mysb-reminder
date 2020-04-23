@@ -3,7 +3,7 @@
 
 ## Install 
 ```
-$ pip3 install mysb-scraping
+$ pip3 install mysb-reminder
 ```
 
 ## Initialize
@@ -46,5 +46,5 @@ print(status)
 ## Demo
 [サンプルコード](https://github.com/miya/MySB_dataTraffic/blob/master/sample.py)を実行した！
 
-<img src="https://user-images.githubusercontent.com/34241526/80058598-aafaac00-8564-11ea-849b-b09d9e0d49b5.png" width=50%>
+<img src="https://user-images.githubusercontent.com/34241526/80075797-32a4e280-8586-11ea-836b-c4f6cdce72b8.png" width=50%>
 
