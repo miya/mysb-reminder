@@ -1,5 +1,5 @@
 build/
 dist/
-mysb_scraping.egg-info/
+mysb_reminder.egg-info/
 
 test.py
