@@ -1,4 +1,4 @@
-# mysb-scraping
+# mysb_reminder
 [MySoftbank](https://www.softbank.jp/mysoftbank/)をスクレイピングして通信データ残量をLINE通知するやつ
 
 ## Install 
