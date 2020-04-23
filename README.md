@@ -1,20 +1,20 @@
-# MySB-datatraffic
+# mysb-scraping
 [MySoftbank](https://www.softbank.jp/mysoftbank/)をスクレイピングして通信データ残量をLINE通知するやつ
 
 ## Install 
 ```
-$ pip3 install MySB_datatraffic
+$ pip3 install mysb-scraping
 ```
 
 ## Initialize
 ```python
-import MySBdt
+import mysoftbank
 
 telnum = "your_phone_number"
 password = "your_MySoftbank_password"
 line_access_token = "your_line_notify_access_token"
 
-api = MySBdt.API(telnum=telnum, password=password, line_access_token=line_access_token)
+api = mysoftbank.API(telnum=telnum, password=password, line_access_token=line_access_token)
 ```
 
 ## Feature
@@ -46,5 +46,5 @@ print(status)
 ## Demo
 [サンプルコード](https://github.com/miya/MySB_dataTraffic/blob/master/sample.py)を実行した！
 
-![](https://user-images.githubusercontent.com/34241526/78420090-e3564b00-7686-11ea-92e6-77bbfdfe56f9.png)
+<img src="https://user-images.githubusercontent.com/34241526/80058598-aafaac00-8564-11ea-849b-b09d9e0d49b5.png" width=50%>
 
