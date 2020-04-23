@@ -1,8 +1,5 @@
-__pycache__/
-.idea/
 build/
 dist/
+mysb_scraping.egg-info/
 
-.DS_Store
-MySB_datatraffic.egg-info
-test2.py
+test.py
